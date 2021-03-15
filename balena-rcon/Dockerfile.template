@@ -14,4 +14,5 @@ COPY .bashrc /root/
 
 RUN chmod +x /usr/src/start.sh
 
+# This is the command to be executed when running the image
 CMD [ "/bin/bash", "/usr/src/start.sh" ]

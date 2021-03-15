@@ -1,4 +1,4 @@
-![Balena Server Logo](images/logo.png)
+![Balena Server Logo](pictures/logo.png)
 
 # Minecraft Server
 **Starter project enabling you a Minecraft Server using just a Raspberry Pi 4 or Jetson Nano.**
@@ -57,13 +57,13 @@ Balena Minecraft Server sets automatically your Server hostname to `balenaminecr
 
 **Note:** The IP address also works.
 
-![Server-IP](images/Server-IP.png)
+![Server-IP](pictures/Server-IP.png)
 
 Now you have a balenaServer :sunglasses::
 
 **NOTE:** This works only in the connected Wifi. If you want to play worldwide click here: https://github.com/AlexProgrammerDE/balena-server/blob/master/README.md#play-worldwide-optional-earth_americas
 
-![Minecraft Screenshot](images/minecraft-screenshot.png)
+![Minecraft Screenshot](pictures/minecraft-screenshot.png)
 
 ## Connect to the terminal :satellite:
 
@@ -106,7 +106,7 @@ balenaMinecraftServer also supports plugins. Just drop the in the plugins folder
 
 Once you’ve perfected the setup of your server on your local network, you might be interested in unveiling your server to the rest of the world! Here’s how you can enable remote access and allow players to connect via the Internet.
 
-![NO-IP Picture](images/NO-IP.png)
+![NO-IP Picture](pictures/NO-IP.png)
 
 If you’d like to allow friends outside of your local network to join your server, you’ll need to set up dynamic DNS (DDNS) to expose your Pi to the outside world. This example uses a service called No-IP, which has a free tier for people who want to try DDNS out, though other options and methods do exist as well. In the case of this example, you will need to: 
 
@@ -137,4 +137,4 @@ This project is in active development so if you have any feature requests or iss
 
 Here is a little server demo :crown::
 
-![Server Demo](images/server-demo.gif)
+![Server Demo](pictures/server-demo.gif)

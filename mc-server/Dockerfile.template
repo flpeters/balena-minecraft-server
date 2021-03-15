@@ -1,8 +1,9 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-openjdk:latest-buster
 
-# \/ If you want to use java 8 delete the # in front of the line below and add a # in front of the first line \/
+# If you want to use java 8, delete the # in front of the line below, and add a # in front of the first line
 # FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-openjdk:8-jdk-stretch
 
+# Set Environment variable https://www.balena.io/docs/learn/develop/runtime/#d-bus-communication-with-host-os
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 RUN install_packages wget jq
@@ -13,4 +14,5 @@ COPY start.sh /usr/src/
 
 RUN chmod +x /usr/src/start.sh
 
+# This is the command to be executed when running the image
 CMD [ "/bin/bash", "/usr/src/start.sh" ]
