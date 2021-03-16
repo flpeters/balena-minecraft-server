@@ -5,7 +5,7 @@
 wget --quiet --spider https://github.com 2>&1
 if [ $? -eq 1 ]; then
   echo "No internet access - exiting"
-  sleep 10
+  sleep 10s
   exit 1
 fi
 
@@ -15,7 +15,7 @@ if [[ -z "$DEVICE_HOSTNAME" ]]; then
 fi
 
 if [[ -z "$RAM" ]]; then
-  RAM="3500M"
+  RAM="3400M"
 fi
 
 if [[ -z "$JVM_FLAGS" ]]; then
@@ -39,9 +39,14 @@ SERVER_JAR="forge-$FILE_VERSION.jar"
 
 # FIRST TIME SETUP
 # 1. Copy default settings into the mounted /usr/src/serverfiles directory
-# 2. If we don't already have 
-# 2. Download the modpack, and the forge installer, if we don't already have a server
+# 2. Download the modpack
+# 3. Extract modpack
+# 4. Download forge installer
+# 5. Execute forge installer
+# 6. Run server
 printf "\n\n%s\n\n" "Starting $DEVICE_HOSTNAME..."
+
+# COPY DEFAULT SETTINGS
 if [[ ! -e "/servercache/copied.txt" ]]; then
   printf "%s\n" "Copying eula.txt, server.properties, and server-icon.png"
   # Copy the serverfiles to the volume
@@ -54,39 +59,51 @@ fi
 
 cd /usr/src/serverfiles/
 
+# DOWNLOAD AND EXTRACT MODPACK
 if [[ ! -e "/servercache/modpack_downloaded.txt" ]]; then
   printf "%s\n" "Downloading RLCraft Modpack..."
-  # md5sum --status -c modpackmd5.txt
-  # MD5: 950d632e5805b1ddce64ab01109dce18 modpack.zip
+  # MD5: 950d632e5805b1ddce64ab01109dce18
   wget -O modpack.zip https://media.forgecdn.net/files/2935/323/RLCraft+Server+Pack+1.12.2+-+Beta+v2.8.2.zip
-  # https://linux.die.net/man/1/unzip | -f: freshen existing files -o: overwrite without prompt
+  # VALIDATE HASH
+  if echo 950d632e5805b1ddce64ab01109dce18 modpack.zip | md5sum -c --status; then
+    printf "%s\n" "modpack.zip is valid..."
+  else
+    printf "%s\n" "modpack.zip is not valid!"
+    # rm -f modpack.zip
+    sleep 10s
+    exit 1
+  fi
   printf "%s\n" "Unpacking RLCraft Modpack..."
-  unzip -f -o modpack.zip
-  # https://linux.die.net/man/1/rm | -f: ignore nonexistent files, never prompt 
-  rm -f modpack.zip
+  # -o: overwrite without prompt
+  unzip -o modpack.zip
+  # -f: ignore nonexistent files, never prompt 
+  # rm -f modpack.zip
   touch /servercache/modpack_downloaded.txt
 else
   printf "%s\n" "RLCraft Modpack is already downloaded."
 fi
 
-# Check to see if we have a server jar, and if we do, is it valid?
+# DOWNLOAD AND INSTALL FORGE SERVER
 if [[ ! -e "/servercache/server_downloaded.txt" ]]; then
   printf "%s\n" "Downloading $SERVER_INSTALLER_JAR..."
   # MD5: b37aedc28e441fec469f910ce913e9c3
   # SHA1: f691a3e4d8f46eebb42d6129f5e192bf4e1121d0
-  wget --quiet -O forge-installer.jar $SERVER_INSTALLER_JAR_URL
+  wget -O forge-installer.jar $SERVER_INSTALLER_JAR_URL
+  # VALIDATE HASH
+  if echo b37aedc28e441fec469f910ce913e9c3 forge-installer.jar | md5sum -c --status; then
+    printf "%s\n" "forge-installer.jar is valid..."
+  else
+    printf "%s\n" "forge-installer.jar is NOT valid!"
+    # rm -f forge-installer.jar
+    sleep 10s
+    exit 1
+  fi
   printf "%s\n" "Running installer..."
   java -jar forge-installer.jar --installServer
-  rm -f forge-installer.jar
+  # rm -f forge-installer.jar
   touch /servercache/server_downloaded.txt
 else
   printf "%s\n" "Forge Server $FILE_VERSION is already installed."
-fi
-
-if [[ ! -z "$FORCE_DEFAULT_CONFIG" ]]; then
-  # Copy the serverfiles to the volume
-  printf "%s\n" "Forcing default settings copy."
-  cp -R /serverfiles /usr/src/
 fi
 
 # Make sure you are in the file volume
@@ -99,4 +116,4 @@ printf "%s\n" "Starting Server with: $JVM_FLAGS"
 java -Xms$RAM -Xmx$RAM $JVM_FLAGS -jar $SERVER_JAR nogui
 
 # Don´t overload the server if the start fails 
-sleep 10
+sleep 10s
