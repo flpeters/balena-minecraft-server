@@ -58,7 +58,7 @@ if [[ ! -e "/servercache/modpack_downloaded.txt" ]]; then
   printf "%s\n" "Downloading RLCraft Modpack..."
   # md5sum --status -c modpackmd5.txt
   # MD5: 950d632e5805b1ddce64ab01109dce18 modpack.zip
-  wget --quiet -T 60 -O modpack.zip https://www.curseforge.com/minecraft/modpacks/rlcraft/download/2935323/file
+  wget -O modpack.zip https://media.forgecdn.net/files/2935/323/RLCraft+Server+Pack+1.12.2+-+Beta+v2.8.2.zip
   # https://linux.die.net/man/1/unzip | -f: freshen existing files -o: overwrite without prompt
   printf "%s\n" "Unpacking RLCraft Modpack..."
   unzip -f -o modpack.zip
@@ -74,10 +74,10 @@ if [[ ! -e "/servercache/server_downloaded.txt" ]]; then
   printf "%s\n" "Downloading $SERVER_INSTALLER_JAR..."
   # MD5: b37aedc28e441fec469f910ce913e9c3
   # SHA1: f691a3e4d8f46eebb42d6129f5e192bf4e1121d0
-  wget --quiet -T 60 -O forge-installer.jar $SERVER_INSTALLER_JAR
+  wget --quiet -O forge-installer.jar $SERVER_INSTALLER_JAR_URL
   printf "%s\n" "Running installer..."
-  java -jar $SERVER_INSTALLER_JAR --installServer
-  rm -f $SERVER_INSTALLER_JAR
+  java -jar forge-installer.jar --installServer
+  rm -f forge-installer.jar
   touch /servercache/server_downloaded.txt
 else
   printf "%s\n" "Forge Server $FILE_VERSION is already installed."
