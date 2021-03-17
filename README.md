@@ -1,21 +1,23 @@
 ![Balena Server Logo](pictures/logo.png)
 
-# Minecraft Server
-**Starter project enabling you a Minecraft Server using just a Raspberry Pi 4 or Jetson Nano.**
+# RLCraft Forge Modpack Minecraft Server
+> The [original project](https://github.com/AlexProgrammerDE/balena-minecraft-server) helps you create a vanilla minecraft server of the latest version. This project is made for the [RLCraft Modpack](https://www.curseforge.com/minecraft/modpacks/rlcraft), which runs on version 1.12.2.  
+> If you want to run your own server using this project as a startingpoint, then I do recommend you to go the the RLCraft page and read the instructions. You should also download the serverpack and read the "FOR SERVERS ONLY..." file.  
 
-This project has been tested on a Raspberry Pi 4 B 4GB & Nvidia Jetson Nano. I do not recommend using a Raspberry Pi 3 or older. They have not enough RAM and power to calculate all the things. :boom:
+**Starter project enabling you a Minecraft Server using just a Raspberry Pi 4.**
+
+This project has been tested on a Raspberry Pi 4 B 4GB. I do not recommend using a Raspberry Pi 3 or older. They have not enough RAM and power to calculate all the things. :boom:
 
 ## Why balenaMinecraftServer?
 
 * It works out of the box, just start it and it just works. :+1:
-* You can play anywhere. You can take the Pi to a friend, connect to his Wifi and enjoy playing. :video_game:
 * It is free. No costs, no big server and no complication. :free:
 * Why host on a computer? A Pi is power efficient! :rocket:
 * You can easy maintain the files on the Pi by using your PC. :computer:
 
 ## Hardware required
 
-* Raspberry Pi 4B (We recommend the 4GB or the 8GB model. 1GB is not enough!) or Nvidia Jetson Nano
+* Raspberry Pi 4B (We recommend the 4GB or the 8GB model. 1GB is not enough!)
 * A fan or cooling system to prevent lag caused by throttling
 * A 16GB or greater micro SD Card (We always recommend SanDisk Extreme Pro SD cards)
 * Power supply
@@ -43,7 +45,7 @@ To run this project is as simple as deploying it to a balenaCloud application; n
 
 You can deploy this server with one click with the button below. Or, you can follow the manual deployment instructions in the next section.
 
-[![](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/AlexProgrammerDE/balena-minecraft-server)
+[![](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/flpeters/balena-minecraft-server)
 
 ### Manually Deploy this application :airplane:
 
@@ -61,7 +63,7 @@ Balena Minecraft Server sets automatically your Server hostname to `balenaminecr
 
 Now you have a balenaServer :sunglasses::
 
-**NOTE:** This works only in the connected Wifi. If you want to play worldwide click here: https://github.com/AlexProgrammerDE/balena-server/blob/master/README.md#play-worldwide-optional-earth_americas
+**NOTE:** This works only in the local network. If you want to play worldwide [click here](https://github.com/flpeters/balena-server/blob/master/README.md#play-worldwide-optional-earth_americas)
 
 ![Minecraft Screenshot](pictures/minecraft-screenshot.png)
 
@@ -70,7 +72,7 @@ Now you have a balenaServer :sunglasses::
 The server has no console input option in the cloud dashboard, so you need `RCON`. The port is `25575` and the password is `balena`. It is a protocol for connecting to the server.
 There are many clients, but you can pick one here:
 
-* mcrcon: https://github.com/Tiiffi/mcrcon/releases (NOTE: You will need for starting this script this batch file if you are using windows (Just paste it in the unzipped directory.): https://github.com/AlexProgrammerDE/RCON-Script/blob/master/launch.bat)
+* mcrcon: https://github.com/Tiiffi/mcrcon/releases (NOTE: For starting this script you will need this batch file if you are using windows (Just paste it in the unzipped directory.): https://github.com/AlexProgrammerDE/RCON-Script/blob/master/launch.bat)
 
 * Minecraft Server RCON: https://alexprogrammerde.github.io/Minecraft-Server-RCON.rar
 
@@ -80,10 +82,6 @@ You can connect to the server and change your serverfiles. I recommend using a t
 
 **NOTE:** You can also change your SCP password by setting the `SCP_PASSWORD` Environment Variable within balenaCloud.  On the left, simply click on “Device Variables” and then click the “Add Variable” button. Give it a name of `SCP_PASSWORD`, and set the value to your password. 
 
-## Connect to another Wifi :satellite:
-
-balenaMinecraftServer has wifi-connect integrated. You can use it for taking the Pi everywhere. If you want to read more is here the link to the programm: https://github.com/balena-io/wifi-connect (There is explained how it works.) 
-
 ## Change hostname
 You can change the hostname by defining the DEVICE_HOSTNAME Environment Variable within balenaCloud.
 
@@ -91,16 +89,11 @@ You can change the hostname by defining the DEVICE_HOSTNAME Environment Variable
 
 ## Custom RAM (optional) :link:
 
-Devices like the Raspberry Pi 4B 4GB or the 8GB model have enough RAM to run the server with more RAM (the default value used by balena Minecraft server is 1GB). If you set `RAM` to a value like `2G`, `4G`, or `6G` it will have the specified amount of RAM available.
+Devices like the Raspberry Pi 4B 4GB or the 8GB model have enough RAM to run the server with more RAM (the default value used by balena Minecraft server is 3.4GB). If you set `RAM` to a value like `2G`, `2500M`, `4G`, or `6G` it will have the specified amount of RAM available.
 
-## Add plugins (optional) :wrench:
+## Custom JVM (Java) parameters (optional) :link:
 
-balenaMinecraftServer also supports plugins. Just drop the in the plugins folder using [`SCP`](https://github.com/AlexProgrammerDE/balena-minecraft-server#connect-to-the-file-directory-satellite). The current Minecraft version is `1.16`. You can get your plugins from there(Other work too.): 
-
-* Spigot resources: https://www.spigotmc.org/resources/categories/spigot.4/
-* Bukkit: https://dev.bukkit.org/bukkit-plugins
-
-**NOTE:** Before adding the plugin and getting an error look if the plugin supports `1.16`.
+For optimizing the server performance it can be usefull to change the way java runs. The [defaults provided](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) are well regarded, but if you want to change them, then you can set `JVM_FLAGS` to anything you like.
 
 ## Play worldwide (optional) :earth_americas:
 
@@ -120,21 +113,4 @@ For a deeper look at setting up remote access, please [reference this guide](htt
 
 ## Custom Server (optional) :eyeglasses:
 
-If you want to customize your server even further, but don't know where to start, take a look at some of the servers listed here for ideas:
-
-* Spigot (Vanilla Java Edition): https://getbukkit.org/download/spigot
-* Purpur (Vanilla Java Edition, very well optimized for 1.16.3) https://purpur.pl3x.net/
-* Vanilla from Minecraft (Vanilla Java Edition): https://getbukkit.org/download/vanilla
-* Paper (Vanilla Java Edition): https://papermc.io/downloads
-* Forge (Modded Java Edition): http://files.minecraftforge.net/
-* ccSpigot (Vanilla Java Edition, Fork and continuation of Paper 1.12.2): https://github.com/moom0o/ccSpigot
-
-Note: Balena Minecraft Server uses Paper. It is an efficient and powerful server. It is compatible with spigot and bukkit plugins.
-
-I encourage you to take your server build even further! There are many tutorials out there on server customization-- this article only touches on a few ideas. If you need help, please reach out by submitting an [issue on GitHub](https://github.com/AlexProgrammerDE/balena-minecraft-server/issues).
-
-This project is in active development so if you have any feature requests or issues please submit them here on GitHub. PRs are welcome, too. :octocat:
-
-Here is a little server demo :crown::
-
-![Server Demo](pictures/server-demo.gif)
+If you want to customize your server even further, but don't know where to start, take a look at the original project here on github: https://github.com/AlexProgrammerDE/balena-minecraft-server
