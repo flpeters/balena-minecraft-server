@@ -108,12 +108,14 @@ The Pi has limited processing power and memory, and world generation is among th
     - `/pregen utils setPriority pregenerator`
     - `/pregen timepertick 250`
     - `/pregen gen startradius square 0 0 b10000`
-4. The `b10000` at the end of the last command is the number of blocks to generate in each direction. 10000 is the recommended setting by the modpack author. Actually generating all of that on a laptop (which is a lot more powerful than a Pi4) took me over two days however, and over 10GB of storage space. Generating 1000 blocks in each direction on a Pi4 took 20 minutes. In general, doubling the number leads to approximately four times the necessary work (so quadrupling = 16 time the work). On the other hand, halving the number also decreases the work to one fourth, so choose wisely.
+4. The `b10000` at the end of the last command is the number of blocks to generate in each direction. 10000 is the recommended setting by the modpack author (see note below). Actually generating all of that on a laptop (which is a lot more powerful than a Pi4) took me over two days however, and over 10GB of storage space. Generating 1000 blocks in each direction on a Pi4 took 20 minutes. In general, doubling the number leads to approximately four times the necessary work (so quadrupling = 16 time the work). On the other hand, halving the number also decreases the work to one fourth, so choose wisely.
 5. If you run out of memory, using `/pregen gen startmassradius square 0 0 b10000 100` instead as the third command might help.
 6. Pregeneration will continue even if the server restarts (rerun the first command in that case to speed up generation), but if you want to cancel the task early, use `/pregen clear` (check out the mods documentation for more info).
 7. Once finished, restart your server by sending the `stop` command via RCON. It will automatically restart. You might also want to remove the mod, but it's not necessary.
 
 **NOTE:** You can also use an already existing map, by simply replacing the world folder. This means you can pregenerate the world on a more powerful machine, and then use that world on the Pi server. Be careful however with using maps generated for different minecraft versions or different mods. Those may not work in the way you intended.
+
+**NOTE:** The GlobalGameRules mod is used to randomize the players spawn point on death to anywhere within 10000 blocks in any direction from the world spawn point. That is why 10000 is the recommended setting for world pregeneration. You CAN change this value in `serverfiles/config/globalgamerules.cfg`, but be aware, as that could negatively affect the intended gameplay experience.
 
 ## Play worldwide (optional) :earth_americas:
 
