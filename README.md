@@ -1,8 +1,8 @@
 ![Balena Server Logo](pictures/logo.png)
 
 # RLCraft Forge Modpack Minecraft Server
-> The [original project](https://github.com/AlexProgrammerDE/balena-minecraft-server) helps you create a vanilla minecraft server of the latest version. This project is made for the [RLCraft Modpack](https://www.curseforge.com/minecraft/modpacks/rlcraft), which runs on version 1.12.2.  
-> If you want to run your own server using this project as a startingpoint, then I do recommend you to go the the RLCraft page and read the instructions. You should also download the serverpack and read the "FOR SERVERS ONLY..." file.  
+> The [original project](https://github.com/AlexProgrammerDE/balena-minecraft-server) helps you create a vanilla minecraft server of the latest version. This project is modified for the [RLCraft Modpack](https://www.curseforge.com/minecraft/modpacks/rlcraft), which runs on version 1.12.2.  
+> If you want to run your own server using this project as a starting point, then I do recommend you to go the the RLCraft page and read the instructions. You should also download the serverpack and read the "FOR SERVERS ONLY..." file.  
 
 **Starter project enabling you a Minecraft Server using just a Raspberry Pi 4.**
 
